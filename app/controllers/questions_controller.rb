@@ -11,8 +11,7 @@ class QuestionsController < ApplicationController
     # In what year was the oldest movie on the list released?
 
     # Your Ruby goes here.
-
-    # @year_of_oldest_movie = ???
+    @year_of_oldest_movie = Movie.order("year ASC").first.year
   end
 
   def question_3
@@ -20,7 +19,10 @@ class QuestionsController < ApplicationController
 
     # Your Ruby goes here.
 
-    # @number_of_movies_directed_by_first_movie_director = ???
+    oldest_movie = Movie.order("year ASC").first
+    director_of_oldest_movie = oldest_movie.director_id
+    movies_by_director_of_oldest = Movie.where({:director_id => director_of_oldest_movie})
+    @number_of_movies_directed_by_first_movie_director = movies_by_director_of_oldest.count
   end
 
   def question_4
