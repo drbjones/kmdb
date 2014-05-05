@@ -40,6 +40,11 @@ class QuestionsController < ApplicationController
     # Your Ruby goes here.
     # You'll probably have to use both ActiveRecord query methods as well as some plain old Ruby logic.
 
-    # @most_recent_movie_for_first_actor = ???
+    actor = "Morgan Freeman"
+    actor_lookup = Actor.find_by({:name => actor}).id
+    actor_roles = Role.where({:actor_id => actor_lookup}).select("movie_id")
+    actor_movies = Movie.where({:id => actor_roles})
+    actor_movies_by_date = actor_movies.order("year DESC")
+    @most_recent_movie_for_first_actor = actor_movies_by_date.first.title
   end
 end
